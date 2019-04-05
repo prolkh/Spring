@@ -55,7 +55,8 @@
                 <li><a href="<%=cp%>/bbs/list">게시판</a></li>
                 <li><a href="<%=cp%>/abbs">AJAX게시판</a></li>
                 <li><a href="#">포토갤러리</a></li>
-                <li><a href="<%=cp%>/chat/main">채팅</a></li>
+                <li><a href="<%=cp%>/chat2/main">채팅</a></li>
+                <li><a href="<%=cp%>/chat/main">채팅방</a></li>
             </ul>
         </li>
 

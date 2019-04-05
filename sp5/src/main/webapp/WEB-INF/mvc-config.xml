@@ -30,6 +30,27 @@
 	   <aop:pointcut id="controllerOperation" expression="execution(public * com.sp..*Controller.*(..))" />
    </aop:config>
 
+	<!-- Interceptor 설정. -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            
+            <!-- 제외 -->
+            <mvc:exclude-mapping path="/"/>
+            <mvc:exclude-mapping path="/main"/>
+            <mvc:exclude-mapping path="/resource/**"/>
+            <mvc:exclude-mapping path="/member/login"/>
+            <mvc:exclude-mapping path="/member/logout"/>
+            <mvc:exclude-mapping path="/member/member"/>
+            <mvc:exclude-mapping path="/member/userIdCheck"/>
+            <mvc:exclude-mapping path="/survey/**"/>
+            <mvc:exclude-mapping path="/user/**"/>
+            <mvc:exclude-mapping path="/xml/**"/>
+            
+            <bean class="com.sp.member.LoginCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>	 
+
 	<!-- 타일즈 환경 설정 -->
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
        <property name="definitions">
@@ -38,31 +59,7 @@
            </list>
        </property>
     </bean>
-    
-    <!-- Interceptor 설정 -->
-    <mvc:interceptors>
-    	<mvc:interceptor>
-    		<mvc:mapping path="/**"/>
-    		
-    		<!-- 제외 -->
-    		<mvc:exclude-mapping path="/"/>
-    		<mvc:exclude-mapping path="/resource/**"/>
-    		<mvc:exclude-mapping path="/main"/>
-    		<mvc:exclude-mapping path="/member/login"/>
-    		<mvc:exclude-mapping path="/member/logout"/>
-    		<mvc:exclude-mapping path="/member/member"/>
-    		<mvc:exclude-mapping path="/member/userIdCheck"/>
-    		<mvc:exclude-mapping path="/bbs/list"/>
-    		<mvc:exclude-mapping path="/notice/list"/>
-    		<mvc:exclude-mapping path="/guest/guest"/>
-    		<mvc:exclude-mapping path="/guest/insert"/>
-    		<mvc:exclude-mapping path="/guest/list"/>
-    		
-    		
-    		<bean class="com.sp.member.LoginCheckInterceptor"/>
-    	</mvc:interceptor>
-    </mvc:interceptors>
-    
+     
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="order" value="1" />
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
@@ -75,11 +72,11 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<!-- 웹소켓 환경 설정  -->
-	<websocket:handlers>
-		<websocket:mapping handler="mySocketHandler" path="/chat.msg"/>
-	</websocket:handlers>
-	<bean id="mySocketHandler" class="com.sp.chat.MySocketHandler"/>
+ 	<!-- 웹소켓 환경 설정 -->
+ 	<websocket:handlers>
+ 		<websocket:mapping handler="mySocketHandler" path="/chat.msg"/>
+ 	</websocket:handlers>
+ 	<bean id="mySocketHandler" class="com.sp.chat.MySocketHandler" />
 
 	<!-- 파일 업로드 -->
     <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -89,13 +86,12 @@
     </bean>
 
     <!-- 예외처리 -->
-<!--     
+<!--
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
         <property name="order" value="1" />
      </bean>
  -->
-      
-<!--     <bean id="exceptionResolver"
+    <bean id="exceptionResolver"
                class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="order" value="1" />
         <property name="exceptionMappings">
@@ -105,10 +101,10 @@
 				<prop key="java.lang.Exception">.error.error</prop>
             </props>
         </property>
-        기타 예외가 발생한 경우 
+         <!-- 기타 예외가 발생한 경우  -->
         <property name="defaultErrorView" value=".error.error"/>
-		에러 발생시 로그 출력
+		<!-- 에러 발생시 로그 출력 -->
     	<property name="warnLogCategory" value="ERROR"/>
-    </bean>
- -->
+   </bean>
+ 
 </beans>

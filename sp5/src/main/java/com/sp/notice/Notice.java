@@ -15,7 +15,7 @@ public class Notice {
 	private long fileSize;
 	
 	// 스프링에서 파일 받기
-	private List<MultipartFile> upload; // <input type="file" name="upload"
+	private List<MultipartFile> upload; // <input type="file" name="upload">
 
 	private long gap;
 
